@@ -23,6 +23,7 @@ const Login: React.FC<LoginProps> = ({actionChange}) => {
       const response: any = await login(email, password);
       if (response.message !== undefined) {
         setLoginMessage("");
+        window.dispatchEvent(new Event('user-logged-in'));
         router.push('/dashboard');
       } else {
         setLoginMessage(response);

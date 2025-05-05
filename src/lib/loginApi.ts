@@ -20,6 +20,11 @@ type SignupForm = {
   password: string;
   name: string;
 };
+type UserProfile = {
+  uid: string;
+  displayName: string;
+  email: string;
+};
 export async function login(email: string, password: string) {
   const cookiesStore = await cookies();
   try {
@@ -58,15 +63,17 @@ export async function logout() {
   return 'Logout Successful';
 }
 
-export async function getUserProfile() {
+export async function getUserProfile(): Promise<UserProfile> {
   try {
     const cookieStore = await cookies();
     const sessionCookie = cookieStore.get('session')?.value;
+    if (!sessionCookie) {
+      return {uid: '', displayName: '', email: ''};
+    }
     const decodedToken = await admin.auth().verifySessionCookie(sessionCookie);
     return {uid: decodedToken.sub, displayName: decodedToken.name, email: decodedToken.email};    
   } catch (error: any) {
-    return getErrorMessage(error.code);
+    return {uid: '', displayName: '', email: ''};
   }
-  
 }
 

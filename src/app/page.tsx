@@ -9,8 +9,7 @@ export default function Home() {
   const router = useRouter();
   return (
     <div>
-        <h1>Hello, This is Spend Manager!</h1>
-        <Button onClick={() => router.push("/login")}>Login</Button>
+      <h1>Hello, This is Spend Manager!</h1>
     </div>
   );
 }
